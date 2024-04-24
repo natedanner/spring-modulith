@@ -32,9 +32,8 @@ class SpringBootModulithMetadataUnitTest {
 
 		var metadata = SpringBootModulithMetadata.of(SpringBootApp.class);
 
-		assertThat(metadata).hasValueSatisfying(it -> {
-			assertThat(it.getSystemName()).hasValue(SpringBootApp.class.getSimpleName());
-		});
+		assertThat(metadata).hasValueSatisfying(it ->
+			assertThat(it.getSystemName()).hasValue(SpringBootApp.class.getSimpleName()));
 	}
 
 	@Test // #130

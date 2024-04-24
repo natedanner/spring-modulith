@@ -62,11 +62,10 @@ public class TestUtils {
 
 		assertThat(context).hasFailed();
 
-		assertThat(context).getFailure().isInstanceOfSatisfying(UnsatisfiedDependencyException.class, it -> {
+		assertThat(context).getFailure().isInstanceOfSatisfying(UnsatisfiedDependencyException.class, it ->
 			assertThat(it.getMostSpecificCause()).isInstanceOfSatisfying(NoSuchBeanDefinitionException.class, ex -> {
 				assertThat(ex.getBeanType()).isEqualTo(expectedMissingDependency);
-			});
-		});
+			}));
 	}
 
 	private static RuntimeException asRuntimeException(Throwable o_O) {

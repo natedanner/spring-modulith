@@ -37,9 +37,8 @@ class RabbitEventExternalizerConfigurationIntegrationTests {
 	void registersExternalizerByDefault() {
 
 		basicSetup()
-				.run(ctxt -> {
-					assertThat(ctxt).hasSingleBean(DelegatingEventExternalizer.class);
-				});
+				.run(ctxt ->
+					assertThat(ctxt).hasSingleBean(DelegatingEventExternalizer.class));
 	}
 
 	@Test // GH-342
@@ -47,9 +46,8 @@ class RabbitEventExternalizerConfigurationIntegrationTests {
 
 		basicSetup()
 				.withPropertyValues("spring.modulith.events.externalization.enabled=false")
-				.run(ctxt -> {
-					assertThat(ctxt).doesNotHaveBean(DelegatingEventExternalizer.class);
-				});
+				.run(ctxt ->
+					assertThat(ctxt).doesNotHaveBean(DelegatingEventExternalizer.class));
 	}
 
 	private ApplicationContextRunner basicSetup() {
@@ -57,7 +55,7 @@ class RabbitEventExternalizerConfigurationIntegrationTests {
 		return new ApplicationContextRunner()
 				.withConfiguration(
 						AutoConfigurations.of(RabbitEventExternalizerConfiguration.class))
-				.withBean(EventExternalizationConfiguration.class, () -> EventExternalizationConfiguration.disabled())
+				.withBean(EventExternalizationConfiguration.class, EventExternalizationConfiguration::disabled)
 				.withBean(RabbitMessageOperations.class, () -> mock(RabbitMessageOperations.class));
 	}
 }

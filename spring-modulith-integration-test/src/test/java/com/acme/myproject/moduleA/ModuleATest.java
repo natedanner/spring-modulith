@@ -51,7 +51,7 @@ class ModuleATest {
 		context.getBean(ServiceComponentA.class).fireEvent();
 
 		TypedPublishedEvents<SomeEventA> matching = events.ofType(SomeEventA.class) //
-				.matching(it -> it.message().equals("Message"));
+				.matching(it -> "Message".equals(it.message()));
 
 		assertThat(matching).hasSize(1);
 	}

@@ -28,7 +28,7 @@ import org.springframework.util.StringUtils;
  * @author Oliver Drotbohm
  * @since 1.1
  */
-public class RoutingTarget {
+public final class RoutingTarget {
 
 	private final String target;
 	private final @Nullable String key;
@@ -80,7 +80,7 @@ public class RoutingTarget {
 	 * @author Oliver Drotbohm
 	 * @since 1.1
 	 */
-	public static class RoutingTargetBuilder {
+	public static final class RoutingTargetBuilder {
 
 		private final String target;
 
@@ -217,7 +217,8 @@ public class RoutingTarget {
 	 */
 	static class ParsedRoutingTarget {
 
-		private final @Nullable String target, key;
+		private final @Nullable String target;
+		private final @Nullable String key;
 
 		ParsedRoutingTarget(@Nullable String target, @Nullable String key) {
 			this.target = target;

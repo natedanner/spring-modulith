@@ -38,9 +38,8 @@ class ModuleTestAutoConfigurationUnitTests {
 		var factory = new DefaultListableBeanFactory();
 		factory.registerBeanDefinition(ModuleTestAutoConfiguration.AUTOCONFIG_PACKAGES, definition);
 
-		assertThatNoException().isThrownBy(() -> {
+		assertThatNoException().isThrownBy(() ->
 			new ModuleTestAutoConfiguration.AutoConfigurationAndEntityScanPackageCustomizer()
-					.setBasePackagesOn(factory, ModuleTestAutoConfiguration.AUTOCONFIG_PACKAGES, Collections.emptyList());
-		});
+					.setBasePackagesOn(factory, ModuleTestAutoConfiguration.AUTOCONFIG_PACKAGES, Collections.emptyList()));
 	}
 }

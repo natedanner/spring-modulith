@@ -58,20 +58,17 @@ class ModulithTest {
 	@Test
 	void verifyModulesWithoutInvalid() {
 
-		assertThatExceptionOfType(Violations.class).isThrownBy(() -> {
+		assertThatExceptionOfType(Violations.class).isThrownBy(() ->
 
 			ApplicationModules
 					.of(Application.class, DEFAULT_EXCLUSIONS.or(Filters.withoutModules("invalid", "opendisallowedclient")))
-					.verify();
-
-		}).satisfies(it -> {
+					.verify()).satisfies(it ->
 
 			assertThat(it.getMessages())
 					.hasSize(1)
 					.element(0, as(InstanceOfAssertFactories.STRING))
 					.contains("root:com.acme.myproject")
-					.contains(InternalComponentB.class.getName());
-		});
+					.contains(InternalComponentB.class.getName()));
 
 	}
 
@@ -96,11 +93,10 @@ class ModulithTest {
 
 		var modules = ApplicationModules.of(Application.class, DEFAULT_EXCLUSIONS);
 
-		assertThat(modules.getModuleByName("moduleD")).hasValueSatisfying(it -> {
+		assertThat(modules.getModuleByName("moduleD")).hasValueSatisfying(it ->
 			assertThat(it.getBootstrapDependencies(modules))
 					.map(ApplicationModule::getName)
-					.doesNotContain("moduleA");
-		});
+					.doesNotContain("moduleA"));
 	}
 
 	@Test // GH-47

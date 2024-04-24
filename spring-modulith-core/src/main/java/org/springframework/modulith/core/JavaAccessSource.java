@@ -28,7 +28,7 @@ import com.tngtech.archunit.core.domain.JavaCodeUnit;
  */
 class JavaAccessSource implements Source {
 
-	private final static Pattern LAMBDA_EXTRACTOR = Pattern.compile("lambda\\$(.*)\\$.*");
+	private static final Pattern LAMBDA_EXTRACTOR = Pattern.compile("lambda\\$(.*)\\$.*");
 
 	private final FormatableType type;
 	private final JavaCodeUnit method;

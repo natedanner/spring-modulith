@@ -56,7 +56,7 @@ class JacksonEventSerializationConfiguration implements EventSerializationConfig
 
 	@Bean
 	public JacksonEventSerializer jacksonEventSerializer() {
-		return new JacksonEventSerializer(() -> mapper.getIfAvailable(() -> defaultObjectMapper()));
+		return new JacksonEventSerializer(() -> mapper.getIfAvailable(this::defaultObjectMapper));
 	}
 
 	private ObjectMapper defaultObjectMapper() {

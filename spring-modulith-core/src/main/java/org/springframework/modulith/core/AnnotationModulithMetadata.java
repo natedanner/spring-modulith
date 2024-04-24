@@ -30,7 +30,7 @@ import org.springframework.util.StringUtils;
  *
  * @author Oliver Drotbohm
  */
-class AnnotationModulithMetadata implements ModulithMetadata {
+final class AnnotationModulithMetadata implements ModulithMetadata {
 
 	private final Class<?> modulithType;
 	private final Modulithic annotation;

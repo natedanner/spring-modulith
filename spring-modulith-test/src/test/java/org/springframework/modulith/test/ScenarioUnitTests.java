@@ -24,6 +24,7 @@ import lombok.RequiredArgsConstructor;
 import java.lang.Thread.UncaughtExceptionHandler;
 import java.time.Duration;
 import java.util.List;
+import java.util.Objects;
 import java.util.function.BiConsumer;
 import java.util.function.Consumer;
 import java.util.function.Function;
@@ -225,7 +226,7 @@ class ScenarioUnitTests {
 		BiConsumer<String, Integer> verification = mock(BiConsumer.class);
 		Runnable cleanupCallback = mock(Runnable.class);
 
-		Consumer<Scenario> consumer = it -> it.stimulate((tx) -> 41)
+		Consumer<Scenario> consumer = it -> it.stimulate(tx -> 41)
 				.andCleanup(cleanupCallback)
 				.andWaitAtMost(WAIT_TIME)
 				.forEventOfType(String.class)
@@ -262,7 +263,7 @@ class ScenarioUnitTests {
 
 		BiConsumer<PublishedEventAssert<? super String>, Integer> verification = mock(BiConsumer.class);
 
-		Consumer<Scenario> consumer = it -> it.stimulate((tx) -> 41)
+		Consumer<Scenario> consumer = it -> it.stimulate(tx -> 41)
 				.forEventOfType(String.class)
 				.toArriveAndAssert(verification);
 
@@ -405,14 +406,13 @@ class ScenarioUnitTests {
 		var events = new DefaultPublishedEvents(List.of(new SomeEvent("payload")));
 		var publishedEvents = new DefaultAssertablePublishedEvents(events);
 
-		assertThatNoException().isThrownBy(() -> {
+		assertThatNoException().isThrownBy(() ->
 			new Scenario(tx, publisher, publishedEvents)
 					.stimulate(runnable)
 					.andWaitForStateChange(() -> true)
 					.andExpect(SomeEvent.class)
-					.matching(it -> it != null)
-					.toArrive();
-		});
+					.matching(Objects::nonNull)
+					.toArrive());
 
 		verify(runnable).run();
 	}
@@ -427,7 +427,7 @@ class ScenarioUnitTests {
 						.stimulate(runnable)
 						.andWaitForStateChange(() -> true)
 						.andExpect(SomeEvent.class)
-						.matching(it -> it != null)
+						.matching(Objects::nonNull)
 						.toArrive());
 
 		verify(runnable).run();
@@ -556,7 +556,7 @@ class ScenarioUnitTests {
 
 	static class InvocationTracingCustomizer implements Function<ConditionFactory, ConditionFactory> {
 
-		boolean invoked = false;
+		boolean invoked;
 
 		@Override
 		public ConditionFactory apply(ConditionFactory t) {

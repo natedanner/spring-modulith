@@ -27,10 +27,10 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.util.Assert;
 
-class ModuleEntryInterceptor implements MethodInterceptor {
+final class ModuleEntryInterceptor implements MethodInterceptor {
 
-	private static Logger LOGGER = LoggerFactory.getLogger(ModuleEntryInterceptor.class);
-	private static Map<String, ModuleEntryInterceptor> CACHE = new HashMap<>();
+	private static final Logger LOGGER = LoggerFactory.getLogger(ModuleEntryInterceptor.class);
+	private static final Map<String, ModuleEntryInterceptor> CACHE = new HashMap<>();
 
 	private final ObservedModule module;
 	private final Tracer tracer;
@@ -52,9 +52,7 @@ class ModuleEntryInterceptor implements MethodInterceptor {
 
 	public static ModuleEntryInterceptor of(ObservedModule module, Tracer tracer) {
 
-		return CACHE.computeIfAbsent(module.getName(), __ -> {
-			return new ModuleEntryInterceptor(module, tracer);
-		});
+		return CACHE.computeIfAbsent(module.getName(), __ -> new ModuleEntryInterceptor(module, tracer));
 	}
 
 	/*

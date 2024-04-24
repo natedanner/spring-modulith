@@ -54,7 +54,8 @@ enum DatabaseType {
 				.orElseThrow(() -> new IllegalArgumentException("Unsupported database type: " + productName));
 	}
 
-	private final String value, fullName;
+	private final String value;
+	private final String fullName;
 
 	DatabaseType(String value, String fullName) {
 		this.value = value;

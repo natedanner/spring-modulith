@@ -74,12 +74,11 @@ class PersistentDomainEventIntegrationTest {
 						.extracting(TargetEventPublication::getTargetIdentifier) //
 						.extracting(PublicationTargetIdentifier::getValue) //
 						.hasSize(2) //
-						.allSatisfy(id -> {
+						.allSatisfy(id ->
 							assertThat(id)
 									.matches(it -> //
 							it.contains(SecondTxEventListener.class.getName()) //
-									|| it.contains(FourthTxEventListener.class.getName()));
-						});
+									|| it.contains(FourthTxEventListener.class.getName())));
 
 			}
 
@@ -99,11 +98,9 @@ class PersistentDomainEventIntegrationTest {
 			// Still 2 uncompleted publications
 			assertThat(registry.findIncompletePublications()).hasSize(2);
 
-			incompletePublications.resubmitIncompletePublications(it -> {
-				return TargetEventPublication.class.cast(it)
+			incompletePublications.resubmitIncompletePublications(it -> TargetEventPublication.class.cast(it)
 						.getTargetIdentifier()
-						.getValue().contains(SecondTxEventListener.class.getName());
-			});
+						.getValue().contains(SecondTxEventListener.class.getName()));
 
 			assertThat(context.getBean(NonTxEventListener.class).getInvoked()).isEqualTo(1);
 			assertThat(context.getBean(FirstTxEventListener.class).getInvoked()).isEqualTo(1);
@@ -164,7 +161,7 @@ class PersistentDomainEventIntegrationTest {
 
 	static class NonTxEventListener {
 
-		@Getter int invoked = 0;
+		@Getter int invoked;
 
 		@EventListener
 		void on(DomainEvent event) {
@@ -174,7 +171,7 @@ class PersistentDomainEventIntegrationTest {
 
 	static class FirstTxEventListener {
 
-		@Getter int invoked = 0;
+		@Getter int invoked;
 
 		@TransactionalEventListener
 		public void on(DomainEvent event) {
@@ -184,7 +181,7 @@ class PersistentDomainEventIntegrationTest {
 
 	static class SecondTxEventListener {
 
-		@Getter int invoked = 0;
+		@Getter int invoked;
 
 		@TransactionalEventListener
 		public void on(DomainEvent event) {
@@ -195,7 +192,7 @@ class PersistentDomainEventIntegrationTest {
 
 	static class ThirdTxEventListener {
 
-		@Getter int invoked = 0;
+		@Getter int invoked;
 
 		@TransactionalEventListener
 		public void on(DomainEvent event) {
@@ -205,7 +202,7 @@ class PersistentDomainEventIntegrationTest {
 
 	static class FourthTxEventListener {
 
-		@Getter int invoked = 0;
+		@Getter int invoked;
 
 		@Async
 		@TransactionalEventListener

@@ -29,7 +29,7 @@ import org.springframework.util.Assert;
  *
  * @author Oliver Drotbohm
  */
-public class ShiftedQuarter {
+public final class ShiftedQuarter {
 
 	private static final MonthDay FIRST_DAY = MonthDay.of(Month.JANUARY, 1);
 	private static final MonthDay LAST_DAY = MonthDay.of(Month.DECEMBER, 31);

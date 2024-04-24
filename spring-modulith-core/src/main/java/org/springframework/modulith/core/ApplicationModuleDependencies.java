@@ -27,7 +27,7 @@ import org.springframework.util.Assert;
  *
  * @author Oliver Drotbohm
  */
-public class ApplicationModuleDependencies {
+public final class ApplicationModuleDependencies {
 
 	private final List<ApplicationModuleDependency> dependencies;
 	private final ApplicationModules modules;

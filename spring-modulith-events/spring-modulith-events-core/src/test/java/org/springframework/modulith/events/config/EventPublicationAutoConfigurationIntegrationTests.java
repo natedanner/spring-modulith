@@ -95,9 +95,8 @@ class EventPublicationAutoConfigurationIntegrationTests {
 	@Test // GH-184
 	void enablesAsyncSupportByDefault() {
 
-		basicSetup().run(context -> {
-			assertThat(context).hasSingleBean(ProxyAsyncConfiguration.class);
-		});
+		basicSetup().run(context ->
+			assertThat(context).hasSingleBean(ProxyAsyncConfiguration.class));
 	}
 
 	@Test // GH-184
@@ -105,11 +104,10 @@ class EventPublicationAutoConfigurationIntegrationTests {
 
 		basicSetup()
 				.withUserConfiguration(CustomAsyncConfiguration.class)
-				.run(context -> {
+				.run(context ->
 					assertThat(context)
 							.doesNotHaveBean(ProxyAsyncConfiguration.class)
-							.hasSingleBean(AspectJAsyncConfiguration.class);
-				});
+							.hasSingleBean(AspectJAsyncConfiguration.class));
 	}
 
 	@Test // GH-206
@@ -130,11 +128,10 @@ class EventPublicationAutoConfigurationIntegrationTests {
 	@Test // GH-294
 	void exposesCompletedAndIncompleteEventPublications() {
 
-		basicSetup().run(context -> {
+		basicSetup().run(context ->
 			assertThat(context)
 					.hasSingleBean(CompletedEventPublications.class)
-					.hasSingleBean(IncompleteEventPublications.class);
-		});
+					.hasSingleBean(IncompleteEventPublications.class));
 	}
 
 	private static <T> ContextConsumer<AssertableApplicationContext> expect(Function<Shutdown, T> extractor,

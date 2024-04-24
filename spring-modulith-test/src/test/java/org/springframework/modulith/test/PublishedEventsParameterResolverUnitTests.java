@@ -77,9 +77,8 @@ class PublishedEventsParameterResolverUnitTests {
 
 		latch.await(50, TimeUnit.MILLISECONDS);
 
-		keys.forEach(it -> {
-			assertThat(allEvents.get(it).ofType(String.class)).containsExactly(it);
-		});
+		keys.forEach(it ->
+			assertThat(allEvents.get(it).ofType(String.class)).containsExactly(it));
 	}
 
 	private static ParameterContext getParameterContext(Class<?> type) {

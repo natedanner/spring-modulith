@@ -44,13 +44,13 @@ class ModuleObservabilityAutoConfiguration {
 	@Bean
 	static ModuleTracingBeanPostProcessor moduleTracingBeanPostProcessor(ApplicationModulesRuntime runtime,
 			ObjectProvider<Tracer> tracer, ConfigurableListableBeanFactory factory) {
-		return new ModuleTracingBeanPostProcessor(runtime, () -> tracer.getObject(), factory);
+		return new ModuleTracingBeanPostProcessor(runtime, tracer::getObject, factory);
 	}
 
 	@Bean
 	static ModuleEventListener tracingModuleEventListener(ApplicationModulesRuntime runtime,
 			ObjectProvider<Tracer> tracer) {
-		return new ModuleEventListener(runtime, () -> tracer.getObject());
+		return new ModuleEventListener(runtime, tracer::getObject);
 	}
 
 	/**

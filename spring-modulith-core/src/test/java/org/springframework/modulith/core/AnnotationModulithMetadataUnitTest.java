@@ -33,25 +33,22 @@ class AnnotationModulithMetadataUnitTest {
 	@Test
 	void findsCustomizationsOnClass() {
 
-		assertThat(AnnotationModulithMetadata.of(Sample.class)).hasValueSatisfying(it -> {
-			assertThat(it.useFullyQualifiedModuleNames()).isTrue();
-		});
+		assertThat(AnnotationModulithMetadata.of(Sample.class)).hasValueSatisfying(it ->
+			assertThat(it.useFullyQualifiedModuleNames()).isTrue());
 	}
 
 	@Test
 	void findsCustomizationsOnClassForMetaAnnotationUsage() {
 
-		assertThat(AnnotationModulithMetadata.of(MetaSample.class)).hasValueSatisfying(it -> {
-			assertThat(it.useFullyQualifiedModuleNames()).isTrue();
-		});
+		assertThat(AnnotationModulithMetadata.of(MetaSample.class)).hasValueSatisfying(it ->
+			assertThat(it.useFullyQualifiedModuleNames()).isTrue());
 	}
 
 	@Test // #130
 	void usesSimpleClassNameAsDefaultSystemName() {
 
-		assertThat(AnnotationModulithMetadata.of(Sample.class)).hasValueSatisfying(it -> {
-			assertThat(it.getSystemName()).hasValue(Sample.class.getSimpleName());
-		});
+		assertThat(AnnotationModulithMetadata.of(Sample.class)).hasValueSatisfying(it ->
+			assertThat(it.getSystemName()).hasValue(Sample.class.getSimpleName()));
 	}
 
 	@Modulithic(useFullyQualifiedModuleNames = true)

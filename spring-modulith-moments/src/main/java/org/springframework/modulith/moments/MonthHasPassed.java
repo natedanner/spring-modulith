@@ -26,7 +26,7 @@ import org.springframework.util.Assert;
  *
  * @author Oliver Drotbohm
  */
-public class MonthHasPassed implements DomainEvent {
+public final class MonthHasPassed implements DomainEvent {
 
 	private final YearMonth month;
 

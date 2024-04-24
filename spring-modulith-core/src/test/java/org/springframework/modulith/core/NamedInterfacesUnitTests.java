@@ -83,8 +83,7 @@ class NamedInterfacesUnitTests {
 
 		var classNames = Arrays.stream(types).map(Class::getName).toArray(String[]::new);
 
-		assertThat(interfaces.getByName(name)).hasValueSatisfying(it -> {
-			assertThat(it).map(JavaClass::getName).containsExactlyInAnyOrder(classNames);
-		});
+		assertThat(interfaces.getByName(name)).hasValueSatisfying(it ->
+			assertThat(it).map(JavaClass::getName).containsExactlyInAnyOrder(classNames));
 	}
 }

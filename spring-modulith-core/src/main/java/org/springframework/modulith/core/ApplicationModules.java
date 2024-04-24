@@ -362,11 +362,9 @@ public class ApplicationModules implements Iterable<ApplicationModule> {
 		return modules.values().stream() //
 				.filter(it -> it.containsPackage(name)) //
 				.findFirst()
-				.or(() -> {
-					return rootModules.get().stream()
+				.or(() -> rootModules.get().stream()
 							.filter(it -> it.hasBasePackage(name))
-							.findFirst();
-				});
+							.findFirst());
 	}
 
 	/**
@@ -602,7 +600,7 @@ public class ApplicationModules implements Iterable<ApplicationModule> {
 		public static DescribedPredicate<JavaClass> withoutModules(String... names) {
 
 			return Arrays.stream(names) //
-					.map(it -> withoutModule(it)) //
+					.map(ApplicationModules.Filters::withoutModule) //
 					.reduce(DescribedPredicate.alwaysFalse(), (left, right) -> left.or(right), (__, right) -> right);
 		}
 

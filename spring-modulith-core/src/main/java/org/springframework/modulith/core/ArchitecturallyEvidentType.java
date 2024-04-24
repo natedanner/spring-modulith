@@ -48,7 +48,7 @@ import com.tngtech.archunit.core.domain.JavaMethod;
  */
 public abstract class ArchitecturallyEvidentType {
 
-	private static Map<Key, ArchitecturallyEvidentType> CACHE = new ConcurrentHashMap<>();
+	private static final Map<Key, ArchitecturallyEvidentType> CACHE = new ConcurrentHashMap<>();
 
 	private final JavaClass type;
 
@@ -203,7 +203,7 @@ public abstract class ArchitecturallyEvidentType {
 		 */
 		private static final Predicate<JavaMethod> IS_IMPLEMENTING_EVENT_LISTENER = it -> //
 		it.getOwner().isAssignableTo(SpringTypes.APPLICATION_LISTENER) //
-				&& it.getName().equals("onApplicationEvent") //
+				&& "onApplicationEvent".equals(it.getName()) //
 				&& !it.reflect().isSynthetic();
 
 		private static final Predicate<JavaMethod> IS_EVENT_LISTENER = IS_ANNOTATED_EVENT_LISTENER
@@ -456,8 +456,15 @@ public abstract class ArchitecturallyEvidentType {
 
 	static class DelegatingType extends ArchitecturallyEvidentType {
 
-		private final Supplier<Boolean> isAggregateRoot, isRepository, isEntity, isService, isController,
-				isEventListener, isConfigurationProperties, isInjectable, isValueObject;
+		private final Supplier<Boolean> isAggregateRoot;
+		private final Supplier<Boolean> isRepository;
+		private final Supplier<Boolean> isEntity;
+		private final Supplier<Boolean> isService;
+		private final Supplier<Boolean> isController;
+		private final Supplier<Boolean> isEventListener;
+		private final Supplier<Boolean> isConfigurationProperties;
+		private final Supplier<Boolean> isInjectable;
+		private final Supplier<Boolean> isValueObject;
 
 		private final Supplier<Collection<JavaClass>> referenceTypes;
 		private final Supplier<Collection<ReferenceMethod>> referenceMethods;

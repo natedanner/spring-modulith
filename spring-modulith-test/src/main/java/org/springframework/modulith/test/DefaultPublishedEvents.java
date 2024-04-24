@@ -99,7 +99,7 @@ class DefaultPublishedEvents implements PublishedEvents, ApplicationListener<App
 				: source;
 	}
 
-	private static class SimpleTypedPublishedEvents<T> implements TypedPublishedEvents<T> {
+	private static final class SimpleTypedPublishedEvents<T> implements TypedPublishedEvents<T> {
 
 		private final List<T> events;
 

@@ -34,7 +34,8 @@ public enum Quarter {
 	Q3(of(Month.JULY, 1), of(Month.SEPTEMBER, 30)), //
 	Q4(of(Month.OCTOBER, 1), of(Month.DECEMBER, 31));
 
-	private final MonthDay start, end;
+	private final MonthDay start;
+	private final MonthDay end;
 
 	/**
 	 * Creates a new {@link Quarter} for the given start and end {@link MonthDay}.

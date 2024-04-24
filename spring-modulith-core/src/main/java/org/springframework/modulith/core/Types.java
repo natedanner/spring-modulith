@@ -157,7 +157,7 @@ class Types {
 
 		Assert.notNull(type, "Annotation type must not be null!");
 
-		return new DescribedPredicate<JavaClass>("resides in a package annotated with", type) {
+		return new DescribedPredicate<>("resides in a package annotated with", type) {
 
 			@Override
 			public boolean test(JavaClass t) {

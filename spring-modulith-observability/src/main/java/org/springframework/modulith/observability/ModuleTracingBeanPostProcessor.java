@@ -105,12 +105,7 @@ public class ModuleTracingBeanPostProcessor extends ModuleTracingSupport impleme
 		if (factory.getBeanDefinition(beanName).getRole() == BeanDefinition.ROLE_INFRASTRUCTURE) {
 			return true;
 		}
-
-		if (factory.findAnnotationOnBean(beanName, ConfigurationProperties.class, false) != null) {
-			return true;
-		}
-
-		return false;
+		return factory.findAnnotationOnBean(beanName, ConfigurationProperties.class, false) != null;
 	}
 
 	private Advisor getOrBuildAdvisor(ObservedModule module, ObservedModuleType type) {
@@ -125,7 +120,7 @@ public class ModuleTracingBeanPostProcessor extends ModuleTracingSupport impleme
 		});
 	}
 
-	private static class ObservableTypeMethodMatcher extends StaticMethodMatcher {
+	private static final class ObservableTypeMethodMatcher extends StaticMethodMatcher {
 
 		private final ObservedModuleType type;
 

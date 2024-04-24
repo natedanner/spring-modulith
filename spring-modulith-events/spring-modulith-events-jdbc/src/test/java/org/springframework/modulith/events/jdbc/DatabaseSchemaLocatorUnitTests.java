@@ -40,9 +40,7 @@ public class DatabaseSchemaLocatorUnitTests {
 	@Test // GH-159
 	void loadsSchemaFilesFromClasspath() {
 
-		when(resourceLoader.getResource(any())).thenAnswer(it -> {
-			return new ClassPathResource(it.<String> getArgument(0).substring(ResourceLoader.CLASSPATH_URL_PREFIX.length()));
-		});
+		when(resourceLoader.getResource(any())).thenAnswer(it -> new ClassPathResource(it.<String> getArgument(0).substring(ResourceLoader.CLASSPATH_URL_PREFIX.length())));
 
 		var locator = new DatabaseSchemaLocator(resourceLoader);
 		var captor = ArgumentCaptor.forClass(String.class);

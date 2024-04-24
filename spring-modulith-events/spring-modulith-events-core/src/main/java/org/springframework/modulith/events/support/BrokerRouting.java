@@ -84,7 +84,7 @@ public class BrokerRouting {
 	 * @author Oliver Drotbohm
 	 * @since 1.1
 	 */
-	static class SpelBrokerRouting extends BrokerRouting {
+	static final class SpelBrokerRouting extends BrokerRouting {
 
 		private static final SpelExpressionParser PARSER = new SpelExpressionParser();
 		private static final TemplateParserContext CONTEXT = new TemplateParserContext();

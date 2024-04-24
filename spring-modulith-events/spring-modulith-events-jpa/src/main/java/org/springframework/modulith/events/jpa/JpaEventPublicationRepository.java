@@ -41,7 +41,7 @@ import org.springframework.util.Assert;
 @Transactional
 class JpaEventPublicationRepository implements EventPublicationRepository {
 
-	private static String BY_EVENT_AND_LISTENER_ID = """
+	private static String byEventAndListenerId = """
 			select p
 			from JpaEventPublication p
 			where
@@ -50,7 +50,7 @@ class JpaEventPublicationRepository implements EventPublicationRepository {
 				and p.completionDate is null
 			""";
 
-	private static String COMPLETE = """
+	private static String complete = """
 			select p
 			from JpaEventPublication p
 			where
@@ -59,7 +59,7 @@ class JpaEventPublicationRepository implements EventPublicationRepository {
 				p.publicationDate asc
 			""";
 
-	private static String INCOMPLETE = """
+	private static String incomplete = """
 			select p
 			from JpaEventPublication p
 			where
@@ -68,7 +68,7 @@ class JpaEventPublicationRepository implements EventPublicationRepository {
 				p.publicationDate asc
 			""";
 
-	private static String INCOMPLETE_BEFORE = """
+	private static String incompleteBefore = """
 			select p
 			from JpaEventPublication p
 			where
@@ -161,7 +161,7 @@ class JpaEventPublicationRepository implements EventPublicationRepository {
 	@Transactional(readOnly = true)
 	public List<TargetEventPublication> findIncompletePublications() {
 
-		return entityManager.createQuery(INCOMPLETE, JpaEventPublication.class)
+		return entityManager.createQuery(incomplete, JpaEventPublication.class)
 				.getResultStream()
 				.map(this::entityToDomain)
 				.toList();
@@ -175,7 +175,7 @@ class JpaEventPublicationRepository implements EventPublicationRepository {
 	@Transactional(readOnly = true)
 	public List<TargetEventPublication> findIncompletePublicationsPublishedBefore(Instant instant) {
 
-		return entityManager.createQuery(INCOMPLETE_BEFORE, JpaEventPublication.class)
+		return entityManager.createQuery(incompleteBefore, JpaEventPublication.class)
 				.setParameter(1, instant)
 				.getResultStream()
 				.map(this::entityToDomain)
@@ -202,7 +202,7 @@ class JpaEventPublicationRepository implements EventPublicationRepository {
 	@Override
 	public List<TargetEventPublication> findCompletedPublications() {
 
-		return entityManager.createQuery(COMPLETE, JpaEventPublication.class)
+		return entityManager.createQuery(complete, JpaEventPublication.class)
 				.getResultList()
 				.stream()
 				.map(this::entityToDomain)
@@ -216,9 +216,8 @@ class JpaEventPublicationRepository implements EventPublicationRepository {
 	@Override
 	public void deletePublications(List<UUID> identifiers) {
 
-		batch(identifiers, DELETE_BATCH_SIZE).forEach(it -> {
-			entityManager.createQuery(DELETE).setParameter(1, identifiers).executeUpdate();
-		});
+		batch(identifiers, DELETE_BATCH_SIZE).forEach(it ->
+			entityManager.createQuery(DELETE).setParameter(1, identifiers).executeUpdate());
 	}
 
 	/*
@@ -249,7 +248,7 @@ class JpaEventPublicationRepository implements EventPublicationRepository {
 
 		var serializedEvent = serializeEvent(event);
 
-		var query = entityManager.createQuery(BY_EVENT_AND_LISTENER_ID, JpaEventPublication.class)
+		var query = entityManager.createQuery(byEventAndListenerId, JpaEventPublication.class)
 				.setParameter(1, serializedEvent)
 				.setParameter(2, listenerId.getValue());
 

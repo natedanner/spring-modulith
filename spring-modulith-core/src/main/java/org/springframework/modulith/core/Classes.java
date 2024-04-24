@@ -44,7 +44,7 @@ import com.tngtech.archunit.core.domain.properties.HasName;
 /**
  * @author Oliver Drotbohm
  */
-class Classes implements DescribedIterable<JavaClass> {
+final class Classes implements DescribedIterable<JavaClass> {
 
 	public static Classes NONE = Classes.of(Collections.emptyList());
 
@@ -106,7 +106,7 @@ class Classes implements DescribedIterable<JavaClass> {
 		Assert.notNull(predicate, "Predicate must not be null!");
 
 		return classes.stream() //
-				.filter((Predicate<JavaClass>) it -> predicate.test(it)) //
+				.filter((Predicate<JavaClass>) predicate::test) //
 				.collect(Collectors.collectingAndThen(Collectors.toList(), Classes::new));
 	}
 

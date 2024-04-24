@@ -52,9 +52,8 @@ class EventPublicationRegistryTests {
 
 		scenario.stimulate(() -> orders.complete(order))
 				.andWaitForStateChange(listener::getEx)
-				.andVerify(__ -> {
-					assertThat(registry.findIncompletePublications()).hasSize(1);
-				});
+				.andVerify(__ ->
+					assertThat(registry.findIncompletePublications()).hasSize(1));
 	}
 
 	static class FailingAsyncTransactionalEventListener {

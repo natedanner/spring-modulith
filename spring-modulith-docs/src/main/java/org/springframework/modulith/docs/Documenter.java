@@ -328,28 +328,8 @@ public class Documenter {
 
 		Function<List<JavaClass>, String> mapper = asciidoctor::typesToBulletPoints;
 
-		return new StringBuilder() //
-
-				.append(startTable("%autowidth.stretch, cols=\"h,a\""))
-				.append(addTableRow("Base package", asciidoctor.toInlineCode(module.getBasePackage().getName()), options))
-
-				// Spring components
-				.append(addTableRow("Spring components", asciidoctor.renderSpringBeans(module, options), options)) //
-				.append(addTableRow("Bean references", asciidoctor.renderBeanReferences(module), options)) //
-
-				// Aggregates
-				.append(addTableRow(aggregates, "Aggregate roots", mapper, options)) //
-				.append(addTableRow(valueTypes, "Value types", mapper, options)) //
-
-				// Events
-				.append(addTableRow("Published events", asciidoctor.renderEvents(module), options)) //
-				.append(addTableRow(module.getEventsListenedTo(modules), "Events listened to", mapper, options)) //
-
-				// Properties
-				.append(addTableRow("Properties",
-						asciidoctor.renderConfigurationProperties(module, properties.getModuleProperties(module)), options)) //
-				.append(startOrEndTable())
-				.toString();
+		return startTable("%autowidth.stretch, cols=\"h,a\"") + addTableRow("Base package", asciidoctor.toInlineCode(module.getBasePackage().getName()), options) + addTableRow("Spring components", asciidoctor.renderSpringBeans(module, options), options) + addTableRow("Bean references", asciidoctor.renderBeanReferences(module), options) + addTableRow(aggregates, "Aggregate roots", mapper, options) + addTableRow(valueTypes, "Value types", mapper, options) + addTableRow("Published events", asciidoctor.renderEvents(module), options) + addTableRow(module.getEventsListenedTo(modules), "Events listened to", mapper, options) + addTableRow("Properties",
+						asciidoctor.renderConfigurationProperties(module, properties.getModuleProperties(module)), options) + startOrEndTable();
 	}
 
 	ApplicationModules getModules() {
@@ -362,19 +342,18 @@ public class Documenter {
 
 	private void addDependencies(ApplicationModule module, Component component, DiagramOptions options) {
 
-		DEPENDENCY_DESCRIPTIONS.entrySet().stream().forEach(entry -> {
+		DEPENDENCY_DESCRIPTIONS.entrySet().stream().forEach(entry ->
 
 			module.getDependencies(modules, entry.getKey()).stream() //
 					.map(ApplicationModuleDependency::getTargetModule) //
 					.map(it -> getComponents(options).get(it)) //
 					.map(it -> component.uses(it, entry.getValue())) //
-					.filter(it -> it != null) //
-					.forEach(it -> it.addTags(entry.getKey().toString()));
-		});
+					.filter(Objects::nonNull) //
+					.forEach(it -> it.addTags(entry.getKey().toString())));
 
 		module.getBootstrapDependencies(modules)
 				.map(it -> component.uses(getComponents(options).get(it), "uses"))
-				.filter(it -> it != null)
+				.filter(Objects::nonNull)
 				.forEach(it -> it.addTags(DependencyType.USES_COMPONENT.toString()));
 	}
 
@@ -423,7 +402,7 @@ public class Documenter {
 		// Remove filtered dependency types
 		DependencyType.allBut(options.getDependencyTypes()) //
 				.map(Object::toString) //
-				.forEach(it -> view.removeRelationshipsWithTag(it));
+				.forEach(view::removeRelationshipsWithTag);
 
 		afterCleanup.accept(view);
 
@@ -436,7 +415,7 @@ public class Documenter {
 					view.getRelationships().stream() //
 							.map(RelationshipView::getRelationship) //
 							.filter(it -> it.getSource().equals(component)) //
-							.forEach(it -> view.remove(it));
+							.forEach(view::remove);
 				});
 
 		// … as well as all elements left without a relationship
@@ -505,7 +484,7 @@ public class Documenter {
 		ComponentView componentView = createComponentView(options);
 		componentView.setTitle(modules.getSystemName().orElse("Modules"));
 
-		addComponentsToView(() -> modules.stream(), componentView, options, it -> {});
+		addComponentsToView(modules::stream, componentView, options, it -> {});
 
 		return render(componentView, options);
 	}
@@ -564,7 +543,7 @@ public class Documenter {
 
 	private static String addTableRow(String title, String content, CanvasOptions options) {
 
-		return options.hideEmptyLines && (content.isBlank() || content.equalsIgnoreCase("none"))
+		return options.hideEmptyLines && (content.isBlank() || "none".equalsIgnoreCase(content))
 				? ""
 				: writeTableRow(title, content);
 	}
@@ -741,7 +720,7 @@ public class Documenter {
 		 */
 		public static DiagramOptions defaults() {
 			return new DiagramOptions(ALL_TYPES, DependencyDepth.IMMEDIATE, it -> false, it -> true, it -> false, null,
-					__ -> Optional.empty(), it -> it.getDisplayName(), DiagramStyle.C4,
+					__ -> Optional.empty(), ApplicationModule::getDisplayName, DiagramStyle.C4,
 					ElementsWithoutRelationships.HIDDEN);
 		}
 
@@ -791,7 +770,7 @@ public class Documenter {
 			 *
 			 * @see <a href="https://c4model.com/#ComponentDiagram">https://c4model.com/#ComponentDiagram</a>
 			 */
-			C4;
+			C4
 		}
 
 		/**
@@ -804,7 +783,7 @@ public class Documenter {
 		 * @see DiagramOptions#withExclusions(Predicate)
 		 */
 		public enum ElementsWithoutRelationships {
-			HIDDEN, VISIBLE;
+			HIDDEN, VISIBLE
 		}
 	}
 
@@ -813,8 +792,10 @@ public class Documenter {
 		static final Grouping FALLBACK_GROUP = new Grouping("Others", __ -> true, null);
 
 		private final List<Grouping> groupers;
-		private final @Nullable String apiBase, targetFileName;
-		private final boolean hideInternals, hideEmptyLines;
+		private final @Nullable String apiBase;
+		private final @Nullable String targetFileName;
+		private final boolean hideInternals;
+		private final boolean hideEmptyLines;
 
 		CanvasOptions(List<Grouping> groupers, @Nullable String apiBase, @Nullable String targetFileName,
 				boolean hideInternals, boolean hideEmptyLines) {
@@ -986,7 +967,7 @@ public class Documenter {
 					.toList();
 		}
 
-		public static class Grouping {
+		public static final class Grouping {
 
 			private final String name;
 			private final Predicate<SpringBean> predicate;

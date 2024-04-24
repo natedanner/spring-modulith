@@ -40,9 +40,8 @@ class ApplicationModulesExporterUnitTests {
 	@Test // #119
 	void rendersApplicationModulesAsJson() {
 
-		assertThatNoException().isThrownBy(() -> {
-			new ObjectMapper().readTree(EXPORTER.toJson());
-		});
+		assertThatNoException().isThrownBy(() ->
+			new ObjectMapper().readTree(EXPORTER.toJson()));
 	}
 
 	@Test // #227
@@ -57,8 +56,7 @@ class ApplicationModulesExporterUnitTests {
 
 	@Test // #227
 	void fullRenderingProducesValidJson() {
-		assertThatNoException().isThrownBy(() -> {
-			new ObjectMapper().readTree(EXPORTER.toJson());
-		});
+		assertThatNoException().isThrownBy(() ->
+			new ObjectMapper().readTree(EXPORTER.toJson()));
 	}
 }

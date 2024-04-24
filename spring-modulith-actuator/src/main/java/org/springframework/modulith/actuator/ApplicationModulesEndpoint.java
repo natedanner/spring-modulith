@@ -32,7 +32,7 @@ import org.springframework.util.function.SingletonSupplier;
  * @author Oliver Drotbohm
  */
 @Endpoint(id = "modulith")
-public class ApplicationModulesEndpoint {
+public final class ApplicationModulesEndpoint {
 
 	private static final Logger LOGGER = LoggerFactory.getLogger(ApplicationModulesEndpoint.class);
 

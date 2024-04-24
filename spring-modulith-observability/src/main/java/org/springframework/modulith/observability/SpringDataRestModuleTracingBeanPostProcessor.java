@@ -77,7 +77,7 @@ public class SpringDataRestModuleTracingBeanPostProcessor extends ModuleTracingS
 		return addAdvisor(bean, advisor, it -> it.setProxyTargetClass(true));
 	}
 
-	private static class DataRestControllerInterceptor implements MethodInterceptor {
+	private static final class DataRestControllerInterceptor implements MethodInterceptor {
 
 		private final Supplier<ApplicationModules> modules;
 		private final Supplier<Tracer> tracer;

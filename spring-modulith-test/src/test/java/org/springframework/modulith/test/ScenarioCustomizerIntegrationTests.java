@@ -101,7 +101,7 @@ class ScenarioCustomizerIntegrationTests {
 	static class TestScenarioCustomizer implements ScenarioCustomizer {
 
 		static Function<ConditionFactory, ConditionFactory> SAMPLE;
-		static boolean invoked = false;
+		static boolean invoked;
 
 		@Override
 		public Function<ConditionFactory, ConditionFactory> getDefaultCustomizer(Method method,

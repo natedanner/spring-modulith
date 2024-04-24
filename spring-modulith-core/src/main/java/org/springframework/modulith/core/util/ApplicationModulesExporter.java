@@ -151,7 +151,7 @@ public class ApplicationModulesExporter {
 	private static Map<String, Set<String>> toNamedInterfaces(NamedInterfaces interfaces) {
 
 		return interfaces.stream()
-				.collect(groupingBy(it -> it.getName(), flatMapping(TO_EXPOSED_TYPES, toSet())));
+				.collect(groupingBy(NamedInterface::getName, flatMapping(TO_EXPOSED_TYPES, toSet())));
 	}
 
 	private static Map<String, Object> toInfo(Entry<ApplicationModule, ? extends Set<DependencyType>> types) {
@@ -162,7 +162,7 @@ public class ApplicationModulesExporter {
 		);
 	}
 
-	private static enum Details {
-		SIMPLE, FULL;
+	private enum Details {
+		SIMPLE, FULL
 	}
 }

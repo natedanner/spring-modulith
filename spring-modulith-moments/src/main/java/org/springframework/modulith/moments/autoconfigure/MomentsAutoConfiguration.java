@@ -44,7 +44,7 @@ class MomentsAutoConfiguration {
 			matchIfMissing = true)
 	Moments moments(ObjectProvider<Clock> clockProvider, ApplicationEventPublisher events, MomentsProperties properties) {
 
-		Clock clock = clockProvider.getIfAvailable(() -> Clock.systemUTC());
+		Clock clock = clockProvider.getIfAvailable(Clock::systemUTC);
 
 		return new Moments(clock, events, properties);
 	}
@@ -55,7 +55,7 @@ class MomentsAutoConfiguration {
 	TimeMachine timeMachine(ObjectProvider<Clock> clockProvider, ApplicationEventPublisher events,
 			MomentsProperties properties) {
 
-		Clock clock = clockProvider.getIfAvailable(() -> Clock.systemUTC());
+		Clock clock = clockProvider.getIfAvailable(Clock::systemUTC);
 
 		return new TimeMachine(clock, events, properties);
 	}

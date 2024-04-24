@@ -46,9 +46,9 @@ import com.tngtech.archunit.core.domain.JavaModifier;
 /**
  * @author Oliver Drotbohm
  */
-class Asciidoctor {
+final class Asciidoctor {
 
-	private static String PLACEHOLDER = "¯\\_(ツ)_/¯";
+	private static final String PLACEHOLDER = "¯\\_(ツ)_/¯";
 	private static final Pattern JAVADOC_CODE = Pattern.compile("\\{\\@(?>link|code|literal)\\s(.*)\\}");
 
 	private final ApplicationModules modules;
@@ -99,7 +99,7 @@ class Asciidoctor {
 
 		var parts = source.split("#");
 		var type = parts[0];
-		var methodSignature = parts.length == 2 ? Optional.of(parts[1]) : Optional.<String> empty();
+		var methodSignature = parts.length == 2 ? Optional.of(parts[1]) : Optional. empty();
 
 		return modules.getModuleByType(type)
 				.flatMap(it -> it.getType(type))
@@ -291,12 +291,12 @@ class Asciidoctor {
 						toInlineCode(referenceTypes));
 			}
 
-			String header = String.format("%s listening to:\n", toInlineCode(type.getType()));
+			String header = String.format("%s listening to:%n", toInlineCode(type.getType()));
 
 			return header + type.getReferenceMethods().map(it -> {
 
 				var method = it.getMethod();
-				Assert.isTrue(method.getRawParameterTypes().size() > 0,
+				Assert.isTrue(!method.getRawParameterTypes().isEmpty(),
 						() -> String.format("Method %s must have at least one parameter!", method));
 
 				var parameterType = method.getRawParameterTypes().get(0);
@@ -327,7 +327,7 @@ class Asciidoctor {
 	}
 
 	public static String startTable(String tableSpec) {
-		return String.format("[%s]\n|===\n", tableSpec);
+		return String.format("[%s]%n|===%n", tableSpec);
 	}
 
 	public static String startOrEndTable() {

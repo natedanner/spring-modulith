@@ -57,7 +57,7 @@ class ModuleContextCustomizerFactory implements ContextCustomizerFactory {
 		return moduleTest == null ? null : new ModuleContextCustomizer(moduleTest.getRootDeclaringClass());
 	}
 
-	static class ModuleContextCustomizer implements ContextCustomizer {
+	static final class ModuleContextCustomizer implements ContextCustomizer {
 
 		private static final Logger LOGGER = LoggerFactory.getLogger(ModuleContextCustomizer.class);
 
@@ -191,7 +191,7 @@ class ModuleContextCustomizerFactory implements ContextCustomizerFactory {
 	 * @author Oliver Drotbohm
 	 * @since 1.1
 	 */
-	private static class ModuleTestExecutionBeanDefinitionSelector implements BeanDefinitionRegistryPostProcessor {
+	private static final class ModuleTestExecutionBeanDefinitionSelector implements BeanDefinitionRegistryPostProcessor {
 
 		private static final Logger LOGGER = LoggerFactory.getLogger(ModuleTestExecutionBeanDefinitionSelector.class);
 

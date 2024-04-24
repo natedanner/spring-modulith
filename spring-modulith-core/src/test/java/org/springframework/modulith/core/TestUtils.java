@@ -36,13 +36,13 @@ import com.tngtech.archunit.core.importer.ClassFileImporter;
  */
 class TestUtils {
 
-	private static Supplier<JavaClasses> imported = SingletonSupplier.of(() -> new ClassFileImporter() //
+	private static final Supplier<JavaClasses> imported = SingletonSupplier.of(() -> new ClassFileImporter() //
 			.importPackagesOf(ApplicationModules.class, Repository.class, AggregateRoot.class));
 
-	private static DescribedPredicate<JavaClass> IS_MODULE_TYPE = JavaClass.Predicates
+	private static final DescribedPredicate<JavaClass> IS_MODULE_TYPE = JavaClass.Predicates
 			.resideInAPackage(ApplicationModules.class.getPackage().getName());
 
-	private static Supplier<Classes> classes = SingletonSupplier
+	private static final Supplier<Classes> classes = SingletonSupplier
 			.of(() -> Classes.of(imported.get()).that(IS_MODULE_TYPE));
 
 	/**

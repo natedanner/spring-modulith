@@ -48,21 +48,21 @@ class DocumenterUnitTests {
 				.groupBeans(modules.getModuleByName("stereotypes").orElseThrow(RuntimeException::new));
 
 		assertThat(result.keySet())
-				.extracting(it -> it.getName())
+				.extracting(Documenter.CanvasOptions.Grouping::getName)
 				.containsExactlyInAnyOrder("Controllers", "Services", "Repositories", "Event listeners",
 						"Configuration properties", "Representations", "Interface implementations", "Others");
 
 		List<SpringBean> impls = result.byGroupName("Interface implementations");
 
 		assertThat(impls).hasSize(1) //
-				.extracting(it -> it.getType()) //
+				.extracting(SpringBean::getType) //
 				.extracting(JavaClass::getSimpleName) //
 				.containsExactly("SomeAppInterfaceImplementation");
 
 		List<SpringBean> listeners = result.byGroupName("Event listeners");
 
 		assertThat(listeners).hasSize(2) //
-				.extracting(it -> it.getType()) //
+				.extracting(SpringBean::getType) //
 				.extracting(JavaClass::getSimpleName) //
 				.containsOnly("SomeEventListener", "SomeTxEventListener");
 	}
@@ -75,8 +75,7 @@ class DocumenterUnitTests {
 		CanvasOptions options = CanvasOptions.defaults() //
 				.groupingBy(Grouping.of("Representations", Grouping.nameMatching(".*Representations")));
 
-		assertThatNoException().isThrownBy(() -> {
-			modules.forEach(it -> documenter.toModuleCanvas(it, options));
-		});
+		assertThatNoException().isThrownBy(() ->
+			modules.forEach(it -> documenter.toModuleCanvas(it, options)));
 	}
 }

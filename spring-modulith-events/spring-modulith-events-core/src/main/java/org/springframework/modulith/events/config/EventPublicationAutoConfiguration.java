@@ -145,7 +145,7 @@ public class EventPublicationAutoConfiguration extends EventPublicationConfigura
 		private boolean anyPropertyConfigured(String... properties) {
 
 			return Arrays.stream(properties)
-					.anyMatch(it -> environment.containsProperty(it));
+					.anyMatch(environment::containsProperty);
 		}
 	}
 }

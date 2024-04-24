@@ -26,7 +26,8 @@ class MissingRuntimeDependency extends RuntimeException {
 
 	private static final long serialVersionUID = 1L;
 
-	private final String description, suggestedAction;
+	private final String description;
+	private final String suggestedAction;
 
 	MissingRuntimeDependency(String description, String suggestedAction) {
 

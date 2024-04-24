@@ -41,9 +41,9 @@ import org.springframework.util.ConcurrentReferenceHashMap;
  * @author Oliver Drotbohm
  * @since 1.1
  */
-class AnnotationTargetLookup implements Supplier<Optional<ParsedRoutingTarget>> {
+final class AnnotationTargetLookup implements Supplier<Optional<ParsedRoutingTarget>> {
 
-	private static Map<Class<?>, AnnotationTargetLookup> LOOKUPS = new ConcurrentReferenceHashMap<>(25);
+	private static final Map<Class<?>, AnnotationTargetLookup> LOOKUPS = new ConcurrentReferenceHashMap<>(25);
 	private static final String JMOLECULES_EXTERNALIZED = "org.jmolecules.event.annotation.Externalized";
 	private static final Class<? extends Annotation> JMOLECULES_ANNOTATION = loadJMoleculesExternalizedIfPresent();
 
@@ -115,7 +115,7 @@ class AnnotationTargetLookup implements Supplier<Optional<ParsedRoutingTarget>> 
 	private Supplier<Optional<ParsedRoutingTarget>> fromJMoleculesExternalized() {
 
 		return JMOLECULES_ANNOTATION == null
-				? () -> Optional.empty()
+				? Optional::empty
 				: () -> lookupTarget(org.jmolecules.event.annotation.Externalized.class,
 						org.jmolecules.event.annotation.Externalized::target,
 						org.jmolecules.event.annotation.Externalized::value);
@@ -133,7 +133,7 @@ class AnnotationTargetLookup implements Supplier<Optional<ParsedRoutingTarget>> 
 			Supplier<Optional<ParsedRoutingTarget>>... functions) {
 
 		return () -> Arrays.stream(functions)
-				.reduce(Optional.empty(), (current, function) -> current.or(() -> function.get()), (l, r) -> r);
+				.reduce(Optional.empty(), (current, function) -> current.or(function::get), (l, r) -> r);
 	}
 
 	/**

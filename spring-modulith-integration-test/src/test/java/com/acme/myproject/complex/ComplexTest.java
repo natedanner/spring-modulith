@@ -45,6 +45,6 @@ class ComplexTest {
 				.hasSize(expectedNames.size() + 1)
 				.containsAll(expectedNames);
 
-		assertThatNoException().isThrownBy(() -> interfaces.getUnnamedInterface());
+		assertThatNoException().isThrownBy(interfaces::getUnnamedInterface);
 	}
 }

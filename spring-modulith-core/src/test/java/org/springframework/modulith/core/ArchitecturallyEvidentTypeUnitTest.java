@@ -108,7 +108,7 @@ class ArchitecturallyEvidentTypeUnitTest {
 	@Test
 	void considersEntityAnAggregateRootIfTheresARepositoryForIt() {
 
-		Map<Class<?>, Boolean> parameters = new HashMap<Class<?>, Boolean>();
+		Map<Class<?>, Boolean> parameters = new HashMap<>();
 		parameters.put(SampleEntity.class, true);
 		parameters.put(OtherEntity.class, false);
 		parameters.put(NoEntity.class, false);

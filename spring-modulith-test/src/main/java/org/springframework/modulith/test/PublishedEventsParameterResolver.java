@@ -43,7 +43,7 @@ class PublishedEventsParameterResolver implements ParameterResolver, AfterEachCa
 	private final Function<ExtensionContext, ApplicationContext> lookup;
 
 	PublishedEventsParameterResolver() {
-		this(ctx -> SpringExtension.getApplicationContext(ctx));
+		this(SpringExtension::getApplicationContext);
 	}
 
 	PublishedEventsParameterResolver(Function<ExtensionContext, ApplicationContext> supplier) {
@@ -59,7 +59,7 @@ class PublishedEventsParameterResolver implements ParameterResolver, AfterEachCa
 
 		var type = parameterContext.getParameter().getType();
 
-		if (type.getName().equals("org.springframework.modulith.test.AssertablePublishedEvents") && !ASSERT_J_PRESENT) {
+		if ("org.springframework.modulith.test.AssertablePublishedEvents".equals(type.getName()) && !ASSERT_J_PRESENT) {
 			throw new IllegalStateException(
 					"Method declares AssertablePublishedEvents as parameter but AssertJ is not on the classpath!");
 		}

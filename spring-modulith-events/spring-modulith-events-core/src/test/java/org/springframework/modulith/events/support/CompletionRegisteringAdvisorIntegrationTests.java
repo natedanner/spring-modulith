@@ -83,7 +83,7 @@ class CompletionRegisteringAdvisorIntegrationTests {
 	@Test // #118
 	void addsCompletionRegisteringInterceptor() throws Exception {
 
-		assertThat(listener).isInstanceOfSatisfying(Advised.class, it -> {
+		assertThat(listener).isInstanceOfSatisfying(Advised.class, it ->
 
 			assertThat(it.getAdvisors())
 					.extracting(Advisor::getAdvice)
@@ -91,7 +91,6 @@ class CompletionRegisteringAdvisorIntegrationTests {
 					.startsWith(
 							AnnotationAsyncExecutionInterceptor.class,
 							CompletionRegisteringMethodInterceptor.class,
-							TransactionInterceptor.class);
-		});
+							TransactionInterceptor.class));
 	}
 }

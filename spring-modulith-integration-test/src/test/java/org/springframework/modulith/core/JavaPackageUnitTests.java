@@ -55,9 +55,8 @@ class JavaPackageUnitTests {
 		var annotation = JavaPackage.of(Classes.of(PKG_CLASSES), "pkg.onpackage") //
 				.getAnnotation(ApplicationModule.class);
 
-		assertThat(annotation).hasValueSatisfying(it -> {
-			assertThat(it.displayName()).isEqualTo("onPackage");
-		});
+		assertThat(annotation).hasValueSatisfying(it ->
+			assertThat(it.displayName()).isEqualTo("onPackage"));
 	}
 
 	@Test // GH-522
@@ -66,17 +65,15 @@ class JavaPackageUnitTests {
 		var annotation = JavaPackage.of(Classes.of(PKG_CLASSES), "pkg.ontype") //
 				.findAnnotation(ApplicationModule.class);
 
-		assertThat(annotation).hasValueSatisfying(it -> {
-			assertThat(it.displayName()).isEqualTo("onType");
-		});
+		assertThat(annotation).hasValueSatisfying(it ->
+			assertThat(it.displayName()).isEqualTo("onType"));
 	}
 
 	@Test // GH-522
 	void rejectsMultipleAnnotationsOnType() {
 
-		assertThatIllegalStateException().isThrownBy(() -> {
+		assertThatIllegalStateException().isThrownBy(() ->
 			JavaPackage.of(Classes.of(PKG_CLASSES), "pkg.multipleontype") //
-					.findAnnotation(ApplicationModule.class);
-		});
+					.findAnnotation(ApplicationModule.class));
 	}
 }

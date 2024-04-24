@@ -187,10 +187,9 @@ class JdbcEventPublicationRepositoryIntegrationTests {
 
 			var actual = repository.findIncompletePublicationsByEventAndTargetIdentifier(testEvent, TARGET_IDENTIFIER);
 
-			assertThat(actual).hasValueSatisfying(it -> {
+			assertThat(actual).hasValueSatisfying(it ->
 				assertThat(it.getPublicationDate()) //
-						.isCloseTo(publication.getPublicationDate(), within(1, ChronoUnit.MILLIS));
-			});
+						.isCloseTo(publication.getPublicationDate(), within(1, ChronoUnit.MILLIS)));
 		}
 
 		@Test // GH-3

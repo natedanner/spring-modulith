@@ -45,7 +45,7 @@ import com.tngtech.archunit.core.domain.JavaModifier;
  *
  * @author Oliver Drotbohm
  */
-public class JavaPackage implements DescribedIterable<JavaClass> {
+public final class JavaPackage implements DescribedIterable<JavaClass> {
 
 	private static final String PACKAGE_INFO_NAME = "package-info";
 	private static final String MULTIPLE_TYPES_ANNOTATED_WITH = "Expected maximum of one type in package %s to be annotated with %s, but got %s!";
@@ -73,9 +73,9 @@ public class JavaPackage implements DescribedIterable<JavaClass> {
 		this.packageClasses = classes.that(resideInAPackage(includeSubPackages ? name.concat("..") : name));
 		this.name = name;
 		this.directSubPackages = SingletonSupplier.of(() -> packageClasses.stream() //
-				.map(it -> it.getPackageName()) //
+				.map(JavaClass::getPackageName) //
 				.filter(it -> !it.equals(name)) //
-				.map(it -> extractDirectSubPackage(it)) //
+				.map(this::extractDirectSubPackage) //
 				.distinct() //
 				.map(it -> of(classes, it)) //
 				.collect(Collectors.toSet()));
@@ -297,11 +297,7 @@ public class JavaPackage implements DescribedIterable<JavaClass> {
 	@Override
 	public String toString() {
 
-		return new StringBuilder(name) //
-				.append("\n") //
-				.append(getClasses().format(name)) //
-				.append('\n') //
-				.toString();
+		return name + "\n" + getClasses().format(name) + '\n';
 	}
 
 	/*

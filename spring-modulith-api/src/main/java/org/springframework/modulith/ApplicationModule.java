@@ -84,6 +84,6 @@ public @interface ApplicationModule {
 		 * not sanctioned. They are also excluded from the cycle detection algorithm. All types contained in an open module
 		 * are part of the unnamed named interface.
 		 */
-		OPEN;
+		OPEN
 	}
 }

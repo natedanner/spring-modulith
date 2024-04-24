@@ -37,9 +37,8 @@ class KafkaEventExternalizerConfigurationIntegrationTests {
 	void registersExternalizerByDefault() {
 
 		basicSetup()
-				.run(ctxt -> {
-					assertThat(ctxt).hasSingleBean(DelegatingEventExternalizer.class);
-				});
+				.run(ctxt ->
+					assertThat(ctxt).hasSingleBean(DelegatingEventExternalizer.class));
 	}
 
 	@Test // GH-342
@@ -47,9 +46,8 @@ class KafkaEventExternalizerConfigurationIntegrationTests {
 
 		basicSetup()
 				.withPropertyValues("spring.modulith.events.externalization.enabled=false")
-				.run(ctxt -> {
-					assertThat(ctxt).doesNotHaveBean(DelegatingEventExternalizer.class);
-				});
+				.run(ctxt ->
+					assertThat(ctxt).doesNotHaveBean(DelegatingEventExternalizer.class));
 	}
 
 	private ApplicationContextRunner basicSetup() {
@@ -57,7 +55,7 @@ class KafkaEventExternalizerConfigurationIntegrationTests {
 		return new ApplicationContextRunner()
 				.withConfiguration(
 						AutoConfigurations.of(KafkaEventExternalizerConfiguration.class))
-				.withBean(EventExternalizationConfiguration.class, () -> EventExternalizationConfiguration.disabled())
+				.withBean(EventExternalizationConfiguration.class, EventExternalizationConfiguration::disabled)
 				.withBean(KafkaOperations.class, () -> mock(KafkaOperations.class));
 	}
 }

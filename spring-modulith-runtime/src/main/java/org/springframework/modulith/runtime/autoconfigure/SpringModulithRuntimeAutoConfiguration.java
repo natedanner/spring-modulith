@@ -147,7 +147,7 @@ class SpringModulithRuntimeAutoConfiguration {
 			var factories = SpringFactoriesLoader.loadFactories(ApplicationModulesFactory.class,
 					ApplicationModulesBootstrap.class.getClassLoader());
 
-			BOOTSTRAP = !factories.isEmpty() ? factories.get(0) : ApplicationModulesFactory.defaultFactory();
+			BOOTSTRAP = factories.isEmpty() ? ApplicationModulesFactory.defaultFactory() : factories.get(0);
 		}
 
 		static ApplicationModules initializeApplicationModules(Class<?> applicationMainClass) {

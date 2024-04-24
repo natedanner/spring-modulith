@@ -26,7 +26,7 @@ import org.springframework.util.Assert;
  *
  * @author Oliver Drotbohm
  */
-public class DayHasPassed implements DomainEvent {
+public final class DayHasPassed implements DomainEvent {
 
 	/**
 	 * The day that has just passed.

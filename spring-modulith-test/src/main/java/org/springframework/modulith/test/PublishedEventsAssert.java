@@ -66,7 +66,7 @@ public class PublishedEventsAssert extends AbstractAssert<PublishedEventsAssert,
 	 *
 	 * @author Oliver Drotbohm
 	 */
-	public class PublishedEventAssert<T> {
+	public final class PublishedEventAssert<T> {
 
 		private final TypedPublishedEvents<T> events;
 

@@ -40,7 +40,7 @@ import com.tngtech.archunit.core.domain.properties.CanBeAnnotated;
  * @author Oliver Drotbohm
  * @see org.springframework.modulith.ApplicationModule#allowedDependencies()
  */
-public class NamedInterface implements Iterable<JavaClass> {
+public final class NamedInterface implements Iterable<JavaClass> {
 
 	static final String UNNAMED_NAME = "<<UNNAMED>>";
 	private static final DescribedPredicate<CanBeAnnotated> ANNOTATED_NAMED_INTERFACE = //

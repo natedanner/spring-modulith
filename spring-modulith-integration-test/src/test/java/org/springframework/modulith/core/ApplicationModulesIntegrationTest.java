@@ -56,19 +56,17 @@ class ApplicationModulesIntegrationTest {
 	@Test
 	void exposesModulesForPrimaryPackages() {
 
-		assertThat(modules.getModuleByName("moduleB")).hasValueSatisfying(it -> {
+		assertThat(modules.getModuleByName("moduleB")).hasValueSatisfying(it ->
 			assertThat(it.getBootstrapDependencies(modules)).anySatisfy(dep -> {
 				assertThat(dep.getName()).isEqualTo("moduleA");
-			});
-		});
+			}));
 	}
 
 	@Test
 	void usesExplicitlyAnnotatedDisplayName() {
 
-		assertThat(modules.getModuleByName("moduleC")).hasValueSatisfying(it -> {
-			assertThat(it.getDisplayName()).isEqualTo("MyModule C");
-		});
+		assertThat(modules.getModuleByName("moduleC")).hasValueSatisfying(it ->
+			assertThat(it.getDisplayName()).isEqualTo("MyModule C"));
 	}
 
 	@Test
@@ -76,10 +74,9 @@ class ApplicationModulesIntegrationTest {
 
 		Optional<ApplicationModule> module = modules.getModuleByName("invalid");
 
-		assertThat(module).hasValueSatisfying(it -> {
+		assertThat(module).hasValueSatisfying(it ->
 			assertThatExceptionOfType(Violations.class) //
-					.isThrownBy(() -> it.verifyDependencies(modules));
-		});
+					.isThrownBy(() -> it.verifyDependencies(modules)));
 	}
 
 	@Test
@@ -103,11 +100,10 @@ class ApplicationModulesIntegrationTest {
 	@Test
 	void detectsReferenceToUndeclaredNamedInterface() {
 
-		assertThat(modules.getModuleByName("invalid3")).hasValueSatisfying(it -> {
+		assertThat(modules.getModuleByName("invalid3")).hasValueSatisfying(it ->
 			assertThatExceptionOfType(Violations.class).isThrownBy(() -> it.verifyDependencies(modules))
 					.withMessageContaining("Allowed targets")
-					.withMessageContaining("complex::API");
-		});
+					.withMessageContaining("complex::API"));
 	}
 
 	@Test
@@ -115,9 +111,8 @@ class ApplicationModulesIntegrationTest {
 
 		Optional<ApplicationModule> module = modules.getModuleByName("moduleA");
 
-		assertThat(module).hasValueSatisfying(it -> {
-			assertThat(it.getSpringBeansInternal().contains(SomeAtBeanComponentA.class.getName())).isTrue();
-		});
+		assertThat(module).hasValueSatisfying(it ->
+			assertThat(it.getSpringBeansInternal().contains(SomeAtBeanComponentA.class.getName())).isTrue());
 	}
 
 	@Test
@@ -126,9 +121,8 @@ class ApplicationModulesIntegrationTest {
 		Optional<ApplicationModule> module = modules.getModuleByName("moduleB");
 		ApplicationModule moduleA = modules.getModuleByName("moduleA").orElseThrow(IllegalStateException::new);
 
-		assertThat(module).hasValueSatisfying(it -> {
-			assertThat(it.getDependencies(modules, DependencyType.EVENT_LISTENER).contains(moduleA)).isTrue();
-		});
+		assertThat(module).hasValueSatisfying(it ->
+			assertThat(it.getDependencies(modules, DependencyType.EVENT_LISTENER).contains(moduleA)).isTrue());
 	}
 
 	@Test
@@ -136,12 +130,11 @@ class ApplicationModulesIntegrationTest {
 
 		Optional<ApplicationModule> moduleByName = modules.getModuleByName("invalid2");
 
-		assertThat(moduleByName).hasValueSatisfying(it -> {
+		assertThat(moduleByName).hasValueSatisfying(it ->
 
 			assertThatExceptionOfType(Violations.class) //
 					.isThrownBy(() -> it.verifyDependencies(modules)) //
-					.withMessageContaining(it.getName());
-		});
+					.withMessageContaining(it.getName()));
 	}
 
 	@Test
@@ -215,9 +208,8 @@ class ApplicationModulesIntegrationTest {
 	@Test // GH-284
 	void detectsOpenModule() {
 
-		assertThat(modules.getModuleByName("open")).hasValueSatisfying(it -> {
-			assertThat(it.isOpen()).isTrue();
-		});
+		assertThat(modules.getModuleByName("open")).hasValueSatisfying(it ->
+			assertThat(it.isOpen()).isTrue());
 
 		var detectViolations = modules.detectViolations().getMessages();
 
@@ -244,8 +236,7 @@ class ApplicationModulesIntegrationTest {
 
 	private static void verifyNamedInterfaces(NamedInterfaces interfaces, String name, Class<?>... types) {
 
-		Stream.of(types).forEach(type -> {
-			assertThat(interfaces.getByName(name)).hasValueSatisfying(named -> named.contains(type));
-		});
+		Stream.of(types).forEach(type ->
+			assertThat(interfaces.getByName(name)).hasValueSatisfying(named -> named.contains(type)));
 	}
 }

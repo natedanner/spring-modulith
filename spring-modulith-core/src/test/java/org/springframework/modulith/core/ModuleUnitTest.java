@@ -68,9 +68,8 @@ class ModuleUnitTest {
 				.containsExactlyInAnyOrder(jMoleculesAnnotated, jMoleculesImplementing);
 		assertThat(events.stream().filter(it -> it.getType().equals(jMoleculesAnnotated))) //
 				.element(0) //
-				.satisfies(it -> {
-					assertThat(it.getSources()).isNotEmpty();
-				});
+				.satisfies(it ->
+					assertThat(it.getSources()).isNotEmpty());
 	}
 
 	@Test // GH-87

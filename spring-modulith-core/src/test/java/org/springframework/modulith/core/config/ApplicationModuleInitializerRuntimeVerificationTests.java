@@ -36,9 +36,8 @@ class ApplicationModuleInitializerRuntimeVerificationTests {
 
 		new ApplicationContextRunner()
 				.withConfiguration(AutoConfigurations.of(ApplicationModuleInitializerRuntimeVerification.class))
-				.run(ctx -> {
-					assertThat(ctx).hasNotFailed();
-				});
+				.run(ctx ->
+					assertThat(ctx).hasNotFailed());
 	}
 
 	@Test // GH-348
@@ -47,7 +46,7 @@ class ApplicationModuleInitializerRuntimeVerificationTests {
 		new ApplicationContextRunner()
 				.withConfiguration(AutoConfigurations.of(ApplicationModuleInitializerRuntimeVerification.class))
 				.withBean(ApplicationModuleInitializer.class, () -> mock(ApplicationModuleInitializer.class))
-				.run(ctx -> {
+				.run(ctx ->
 
 					assertThat(ctx)
 							.hasFailed()
@@ -55,7 +54,6 @@ class ApplicationModuleInitializerRuntimeVerificationTests {
 							.isInstanceOf(IllegalStateException.class)
 							.hasMessageContaining("ApplicationModuleInitializer") // Type
 							.hasMessageContaining("applicationModuleInitializer") // Bean name
-							.hasMessageContaining("spring-modulith-runtime"); // Missing artifact
-				});
+							.hasMessageContaining("spring-modulith-runtime"));
 	}
 }

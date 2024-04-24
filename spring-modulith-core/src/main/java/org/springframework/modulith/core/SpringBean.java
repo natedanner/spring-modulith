@@ -27,7 +27,7 @@ import com.tngtech.archunit.core.domain.JavaClass;
  *
  * @author Oliver Drotbohm
  */
-public class SpringBean {
+public final class SpringBean {
 
 	private final JavaClass type;
 	private final ApplicationModule module;

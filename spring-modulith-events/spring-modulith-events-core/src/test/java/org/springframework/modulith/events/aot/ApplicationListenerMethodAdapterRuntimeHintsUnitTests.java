@@ -22,6 +22,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.aot.hint.ExecutableHint;
 import org.springframework.aot.hint.ExecutableMode;
 import org.springframework.aot.hint.RuntimeHints;
+import org.springframework.aot.hint.TypeHint;
 import org.springframework.context.event.ApplicationListenerMethodAdapter;
 
 /**
@@ -44,7 +45,7 @@ class ApplicationListenerMethodAdapterRuntimeHintsUnitTests {
 
 		assertThat(typeHint)
 				.isNotNull()
-				.extracting(it -> it.methods())
+				.extracting(TypeHint::methods)
 				.asInstanceOf(stream(ExecutableHint.class))
 				.hasSize(1)
 				.element(0)

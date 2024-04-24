@@ -28,7 +28,7 @@ import org.springframework.util.Assert;
  *
  * @author Oliver Drotbohm
  */
-public class Violations extends RuntimeException {
+public final class Violations extends RuntimeException {
 
 	private static final long serialVersionUID = 6863781504675034691L;
 

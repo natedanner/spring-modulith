@@ -96,7 +96,7 @@ public interface EventExternalizationConfiguration {
 	 * @return will never be {@literal null}.
 	 */
 	public static Predicate<Object> annotatedAsExternalized() {
-		return event -> AnnotationTargetLookup.hasExternalizedAnnotation(event);
+		return AnnotationTargetLookup::hasExternalizedAnnotation;
 	}
 
 	/**
@@ -340,9 +340,7 @@ public interface EventExternalizationConfiguration {
 	 */
 	public static class Router {
 
-		private static final Function<Object, RoutingTarget> DEFAULT_ROUTER = it -> {
-			return mergeWithExternalizedAnnotation(it, byFullyQualifiedTypeName().apply(it));
-		};
+		private static final Function<Object, RoutingTarget> DEFAULT_ROUTER = it -> mergeWithExternalizedAnnotation(it, byFullyQualifiedTypeName().apply(it));
 
 		private final Predicate<Object> filter;
 		private final Function<Object, Object> mapper;

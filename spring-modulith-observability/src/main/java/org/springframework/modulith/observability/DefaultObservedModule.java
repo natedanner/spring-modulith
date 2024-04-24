@@ -153,7 +153,7 @@ class DefaultObservedModule implements ObservedModule {
 		var typeName = module.getType(type.getName())
 				.map(FormatableType::of)
 				.map(FormatableType::getAbbreviatedFullName)
-				.orElseGet(() -> type.getName());
+				.orElseGet(type::getName);
 
 		return typeName + "." + method.getName() + "(…)";
 	}

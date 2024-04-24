@@ -21,5 +21,5 @@ public enum DependencyDepth {
 
 	IMMEDIATE,
 
-	ALL;
+	ALL
 }

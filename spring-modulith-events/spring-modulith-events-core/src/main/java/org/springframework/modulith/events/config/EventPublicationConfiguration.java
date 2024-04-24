@@ -44,7 +44,7 @@ class EventPublicationConfiguration {
 	@Role(BeanDefinition.ROLE_INFRASTRUCTURE)
 	DefaultEventPublicationRegistry eventPublicationRegistry(EventPublicationRepository repository,
 			ObjectProvider<Clock> clock) {
-		return new DefaultEventPublicationRegistry(repository, clock.getIfAvailable(() -> Clock.systemUTC()));
+		return new DefaultEventPublicationRegistry(repository, clock.getIfAvailable(Clock::systemUTC));
 	}
 
 	@Bean
@@ -52,8 +52,8 @@ class EventPublicationConfiguration {
 	static PersistentApplicationEventMulticaster applicationEventMulticaster(
 			ObjectFactory<EventPublicationRegistry> eventPublicationRegistry, ObjectFactory<Environment> environment) {
 
-		return new PersistentApplicationEventMulticaster(() -> eventPublicationRegistry.getObject(),
-				() -> environment.getObject());
+		return new PersistentApplicationEventMulticaster(eventPublicationRegistry::getObject,
+				environment::getObject);
 	}
 
 	@Bean

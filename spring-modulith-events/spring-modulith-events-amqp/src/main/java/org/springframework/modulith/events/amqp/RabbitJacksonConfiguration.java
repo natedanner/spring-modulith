@@ -43,8 +43,7 @@ class RabbitJacksonConfiguration {
 	@ConditionalOnBean(ObjectMapper.class)
 	RabbitTemplateCustomizer rabbitTemplateCustomizer(ObjectMapper mapper) {
 
-		return template -> {
+		return template ->
 			template.setMessageConverter(new Jackson2JsonMessageConverter(mapper));
-		};
 	}
 }

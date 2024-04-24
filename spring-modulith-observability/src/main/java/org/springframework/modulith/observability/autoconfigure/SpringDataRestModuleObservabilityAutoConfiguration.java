@@ -36,6 +36,6 @@ class SpringDataRestModuleObservabilityAutoConfiguration {
 	static SpringDataRestModuleTracingBeanPostProcessor springDataRestModuleTracingBeanPostProcessor(
 			ApplicationModulesRuntime runtime, ObjectProvider<Tracer> tracer) {
 
-		return new SpringDataRestModuleTracingBeanPostProcessor(runtime, () -> tracer.getObject());
+		return new SpringDataRestModuleTracingBeanPostProcessor(runtime, tracer::getObject);
 	}
 }

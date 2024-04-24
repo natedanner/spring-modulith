@@ -33,7 +33,7 @@ import org.springframework.util.ReflectionUtils.MethodCallback;
  */
 public class AggregateTestUtils {
 
-	private static Map<Class<?>, Optional<Method>> CACHE = new ConcurrentHashMap<>();
+	private static final Map<Class<?>, Optional<Method>> CACHE = new ConcurrentHashMap<>();
 
 	/**
 	 * Extracts all domain events from the given aggregate that uses Spring Data's {@link DomainEvents} annotation to

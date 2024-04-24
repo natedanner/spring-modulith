@@ -38,9 +38,8 @@ class JmsEventExternalizerConfigurationIntegrationTests {
 	void registersExternalizerByDefault() {
 
 		basicSetup()
-				.run(ctxt -> {
-					assertThat(ctxt).hasSingleBean(DelegatingEventExternalizer.class);
-				});
+				.run(ctxt ->
+					assertThat(ctxt).hasSingleBean(DelegatingEventExternalizer.class));
 	}
 
 	@Test // GH-342
@@ -48,9 +47,8 @@ class JmsEventExternalizerConfigurationIntegrationTests {
 
 		basicSetup()
 				.withPropertyValues("spring.modulith.events.externalization.enabled=false")
-				.run(ctxt -> {
-					assertThat(ctxt).doesNotHaveBean(DelegatingEventExternalizer.class);
-				});
+				.run(ctxt ->
+					assertThat(ctxt).doesNotHaveBean(DelegatingEventExternalizer.class));
 	}
 
 	private ApplicationContextRunner basicSetup() {
@@ -58,7 +56,7 @@ class JmsEventExternalizerConfigurationIntegrationTests {
 		return new ApplicationContextRunner()
 				.withConfiguration(
 						AutoConfigurations.of(JmsEventExternalizerConfiguration.class))
-				.withBean(EventExternalizationConfiguration.class, () -> EventExternalizationConfiguration.disabled())
+				.withBean(EventExternalizationConfiguration.class, EventExternalizationConfiguration::disabled)
 				.withBean(EventSerializer.class, () -> mock(EventSerializer.class))
 				.withBean(JmsOperations.class, () -> mock(JmsOperations.class));
 	}

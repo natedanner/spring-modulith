@@ -35,7 +35,7 @@ import com.tngtech.archunit.core.domain.JavaClass;
  *
  * @author Oliver Drotbohm
  */
-public class NamedInterfaces implements Iterable<NamedInterface> {
+public final class NamedInterfaces implements Iterable<NamedInterface> {
 
 	public static final NamedInterfaces NONE = new NamedInterfaces(Collections.emptyList());
 

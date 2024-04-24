@@ -37,7 +37,7 @@ import org.springframework.util.Assert;
  * @author Oliver Drotbohm
  */
 @ConfigurationProperties(prefix = "spring.modulith.moments")
-public class MomentsProperties {
+public final class MomentsProperties {
 
 	public static final MomentsProperties DEFAULTS = new MomentsProperties();
 
@@ -168,7 +168,7 @@ public class MomentsProperties {
 	 *
 	 * @author Oliver Drotbohm
 	 */
-	static enum Granularity {
+	enum Granularity {
 
 		/**
 		 * Publish hourly events. Will include daily events.
@@ -178,10 +178,10 @@ public class MomentsProperties {
 		/**
 		 * Publish daily events only.
 		 */
-		DAYS;
+		DAYS
 	}
 
-	private static class ShiftedQuarters {
+	private static final class ShiftedQuarters {
 
 		private final List<ShiftedQuarter> quarters;
 

@@ -25,7 +25,7 @@ import org.springframework.util.Assert;
  *
  * @author Oliver Drotbohm
  */
-public class PublicationTargetIdentifier {
+public final class PublicationTargetIdentifier {
 
 	private final String value;
 

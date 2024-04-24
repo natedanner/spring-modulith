@@ -37,7 +37,7 @@ import org.springframework.util.ReflectionUtils;
  */
 class ObservedModuleType {
 
-	private static Collection<Class<?>> IGNORED_TYPES = List.of(Advised.class, TargetClassAware.class);
+	private static final Collection<Class<?>> IGNORED_TYPES = List.of(Advised.class, TargetClassAware.class);
 
 	private final ApplicationModules modules;
 	private final ObservedModule module;

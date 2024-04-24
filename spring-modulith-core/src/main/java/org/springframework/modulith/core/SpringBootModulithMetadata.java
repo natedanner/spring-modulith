@@ -35,7 +35,7 @@ import org.springframework.util.Assert;
  *
  * @author Oliver Drotbohm
  */
-class SpringBootModulithMetadata implements ModulithMetadata {
+final class SpringBootModulithMetadata implements ModulithMetadata {
 
 	private static final Class<? extends Annotation> AT_SPRING_BOOT_APPLICATION = Types
 			.loadIfPresent(SpringTypes.AT_SPRING_BOOT_APPLICATION);
